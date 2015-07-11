@@ -4,5 +4,6 @@ import android.view.Menu;
 
 public interface ActionBarModifier {
   boolean onPrepareOptionsMenu(Menu menu);
+
   String getTitle();
 }
