@@ -1,0 +1,15 @@
+<resources>
+  <string name="app_name">FlowMortarDagger2Demo</string>
+  <string name="action_add">Add</string>
+  <string name="title_todo_list">Todo List</string>
+  <string name="title_todo_add">Add Item</string>
+  <string name="title_todo_edit">Edit Item</string>
+  <string name="button_add">Add</string>
+  <string name="button_update">Update</string>
+  <string name="button_delete">Delete</string>
+  <string name="label_content">Content:</string>
+  <string name="label_added_date">Added Date:</string>
+  <string name="label_all">All</string>
+  <string name="label_done">Done</string>
+  <string name="label_undone">Undone</string>
+</resources>

@@ -1,0 +1,34 @@
+<net.tai2.flowmortardagger2demo.view.TodoAddView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    >
+
+  <TextView
+      android:id="@+id/label_content"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textStyle="bold"
+      android:text="@string/label_content"
+      />
+
+  <EditText
+      android:id="@+id/content"
+      android:layout_below="@id/label_content"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:singleLine="true"
+      />
+
+  <Button
+      android:id="@+id/button_add"
+      android:layout_below="@id/content"
+      android:layout_centerHorizontal="true"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/button_add"
+      />
+</net.tai2.flowmortardagger2demo.view.TodoAddView>

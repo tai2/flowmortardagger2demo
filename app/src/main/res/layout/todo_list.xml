@@ -1,0 +1,45 @@
+<net.tai2.flowmortardagger2demo.view.TodoListView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    >
+
+  <RadioGroup
+      android:id="@+id/filter_group"
+      android:layout_gravity="center_horizontal"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="5dp"
+      android:layout_marginBottom="5dp"
+      android:orientation="horizontal"
+      >
+    <RadioButton
+        android:id="@+id/radio_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_all"
+        />
+    <RadioButton
+        android:id="@+id/radio_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_done"
+        />
+    <RadioButton
+        android:id="@+id/radio_undone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_undone"
+        />
+  </RadioGroup>
+
+  <ListView
+      android:id="@+id/list_view"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      />
+</net.tai2.flowmortardagger2demo.view.TodoListView>
