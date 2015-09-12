@@ -6,6 +6,6 @@ An example todo app based on [pyricau's work](https://github.com/pyricau/dagger2
 Dependencies
 --------------
 
-* (Google)Dagger 2.0
-* Flow 0.9
-* Mortar 0.17
+* (Google)Dagger 2.0.1
+* Flow 0.12
+* Mortar 0.19
