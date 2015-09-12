@@ -45,8 +45,8 @@ android {
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
   compile 'com.google.code.gson:gson:2.3'
-  compile 'com.squareup.flow:flow:0.9'
-  compile 'com.squareup.flow:flow-path:0.9'
+  compile 'com.squareup.flow:flow:0.12'
+  compile 'com.squareup.flow:flow-path:0.12'
   compile 'com.squareup.mortar:mortar:0.19'
   compile 'com.google.dagger:dagger:2.0.1'
   compile 'com.jakewharton:butterknife:7.0.1'
