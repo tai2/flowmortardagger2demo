@@ -86,17 +86,4 @@ import net.tai2.flowmortardagger2demo.view.TodoEditView;
       Flow.get(getView()).goBack();
     }
   }
-
-  @Override public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    TodoEditPath that = (TodoEditPath)o;
-
-    return itemId.equals(that.itemId);
-  }
-
-  @Override public int hashCode() {
-    return itemId.hashCode();
-  }
 }
