@@ -16,7 +16,7 @@ public class PathScoper {
 
   static class ComponentEntry {
     Class<?> componentClass;
-    List<Constructor> modulrConstructors;
+    List<Constructor> moduleConstructors;
   }
 
   private final Map<Class, ComponentEntry> componentCache = new LinkedHashMap<>();
@@ -39,9 +39,9 @@ public class PathScoper {
       throw new UnsupportedOperationException();
     }
 
-    List<Object> args = new ArrayList<Object>();
+    List<Object> args = new ArrayList<>();
 
-    for (Constructor constructor : componentEntry.modulrConstructors) {
+    for (Constructor constructor : componentEntry.moduleConstructors) {
       Class[] parameters = constructor.getParameterTypes();
 
       Class pathParameter;
@@ -80,7 +80,7 @@ public class PathScoper {
       WithComponent withComponentAnnotation = pathType.getAnnotation(WithComponent.class);
       if (withComponentAnnotation != null) {
         Class<?> componentClass = withComponentAnnotation.value();
-        List<Constructor> moduleConstructors = new ArrayList<Constructor>();
+        List<Constructor> moduleConstructors = new ArrayList<>();
 
         dagger.Component componentAnnotation = componentClass.getAnnotation(dagger.Component.class);
         for (Class<?> moduleClass : componentAnnotation.modules()) {
@@ -104,7 +104,7 @@ public class PathScoper {
 
         componentEntry = new ComponentEntry();
         componentEntry.componentClass = componentClass;
-        componentEntry.modulrConstructors = moduleConstructors;
+        componentEntry.moduleConstructors = moduleConstructors;
         componentCache.put(pathType, componentEntry);
       }
     }
