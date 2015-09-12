@@ -52,9 +52,6 @@ import net.tai2.flowmortardagger2demo.view.TodoListView;
       getView().showList(todoItems);
     }
 
-    @Override protected void onSave(Bundle outState) {
-    }
-
     public void onFilterChanged(String filter) {
       prefs.edit().putString("filter", filter).commit();
       showList();

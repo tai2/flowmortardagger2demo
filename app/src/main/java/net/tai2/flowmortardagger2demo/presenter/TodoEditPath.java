@@ -43,22 +43,10 @@ import net.tai2.flowmortardagger2demo.view.TodoEditView;
     }
 
     @Override protected void onLoad(Bundle savedInstanceState) {
-      if (savedInstanceState != null) {
-        itemId = savedInstanceState.getString("itemId");
-      }
-
       Realm realm = Realm.getInstance(getView().getContext());
       Todo todo = realm.where(Todo.class).equalTo("id", itemId).findFirst();
       getView().setContent(todo.getContent());
       getView().setAddedDate(todo.getAddedDate());
-    }
-
-    @Override protected void onSave(Bundle outState) {
-      outState.putString("itemId", itemId);
-    }
-
-    @Override public void dropView(TodoEditView view) {
-      super.dropView(view);
     }
 
     public void onEditClick() {

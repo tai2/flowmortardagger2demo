@@ -1,6 +1,5 @@
 package net.tai2.flowmortardagger2demo.presenter;
 
-import android.os.Bundle;
 import flow.Flow;
 import flow.path.Path;
 import io.realm.Realm;
@@ -26,16 +25,6 @@ import net.tai2.flowmortardagger2demo.view.TodoAddView;
   @PerScreen public static class Presenter extends ViewPresenter<TodoAddView> {
 
     @Inject Presenter() {
-    }
-
-    @Override protected void onLoad(Bundle savedInstanceState) {
-    }
-
-    @Override protected void onSave(Bundle outState) {
-    }
-
-    @Override public void dropView(TodoAddView view) {
-      super.dropView(view);
     }
 
     public void onAddClick() {
