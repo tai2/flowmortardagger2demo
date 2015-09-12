@@ -41,7 +41,7 @@ import net.tai2.flowmortardagger2demo.view.TodoAddView;
     public void onAddClick() {
       String content = getView().getContent();
       if (!content.isEmpty()) {
-        Todo todo = new Todo();
+        Todo todo = Todo.create();
         todo.setContent(content);
         todo.setAddedDate(new Date());
         todo.setDone(false);

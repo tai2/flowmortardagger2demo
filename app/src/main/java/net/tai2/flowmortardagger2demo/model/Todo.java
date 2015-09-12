@@ -12,8 +12,10 @@ public class Todo extends RealmObject {
   private Date addedDate;
   private boolean done;
 
-  public Todo() {
-    this.id = generateRandomId();
+  public static Todo create() {
+    Todo todo = new Todo();
+    todo.setId(generateRandomId());
+    return todo;
   }
 
   private static String generateRandomId() {
@@ -22,7 +24,7 @@ public class Todo extends RealmObject {
     sr.nextBytes(bytes);
     StringBuilder sb = new StringBuilder();
     for (byte b : bytes) {
-      sb.append(String.format("%02X ", b));
+      sb.append(String.format("%x", b));
     }
     return sb.toString();
   }
