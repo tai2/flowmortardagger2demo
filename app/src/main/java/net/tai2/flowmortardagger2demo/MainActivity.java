@@ -10,11 +10,8 @@ import flow.Flow;
 import flow.FlowDelegate;
 import flow.History;
 import flow.path.PathContainerView;
-import io.realm.Realm;
-import io.realm.RealmQuery;
 import mortar.MortarScope;
 import mortar.bundler.BundleServiceRunner;
-import net.tai2.flowmortardagger2demo.model.Todo;
 import net.tai2.flowmortardagger2demo.mvpsupport.ActionBarModifier;
 import net.tai2.flowmortardagger2demo.mvpsupport.GsonParceler;
 import net.tai2.flowmortardagger2demo.mvpsupport.HandlesBack;
@@ -51,10 +48,6 @@ public class MainActivity extends Activity implements Flow.Dispatcher {
   @Override protected void onResume() {
     super.onResume();
     flowDelegate.onResume();
-
-    Realm realm = Realm.getInstance(this);
-    RealmQuery<Todo> query = realm.where(Todo.class);
-    query.findAll();
   }
 
   @Override protected void onPause() {

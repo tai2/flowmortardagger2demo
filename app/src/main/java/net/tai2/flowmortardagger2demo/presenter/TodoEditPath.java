@@ -5,13 +5,17 @@ import dagger.Provides;
 import flow.Flow;
 import flow.path.Path;
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import java.util.Date;
 import javax.inject.Inject;
-import mortar.ViewPresenter;
+import mortar.MortarScope;
 import net.tai2.flowmortardagger2demo.MyApplication;
 import net.tai2.flowmortardagger2demo.R;
 import net.tai2.flowmortardagger2demo.model.Todo;
+import net.tai2.flowmortardagger2demo.mvpsupport.ContextHolder;
 import net.tai2.flowmortardagger2demo.mvpsupport.Layout;
 import net.tai2.flowmortardagger2demo.mvpsupport.PerScreen;
+import net.tai2.flowmortardagger2demo.mvpsupport.ViewPresenter;
 import net.tai2.flowmortardagger2demo.mvpsupport.WithComponent;
 import net.tai2.flowmortardagger2demo.view.TodoEditView;
 
@@ -22,6 +26,16 @@ import net.tai2.flowmortardagger2demo.view.TodoEditView;
 
   public TodoEditPath(String itemId) {
     this.itemId = itemId;
+  }
+
+  public interface View extends ContextHolder {
+    String getContent();
+
+    void setContent(String text);
+
+    void setAddedDate(Date date);
+
+    void hideKeyboard();
   }
 
   @dagger.Module public class Module {
@@ -35,15 +49,25 @@ import net.tai2.flowmortardagger2demo.view.TodoEditView;
     void inject(TodoEditView v);
   }
 
-  @PerScreen public static class Presenter extends ViewPresenter<TodoEditView> {
+  @PerScreen public static class Presenter extends ViewPresenter<View> {
 
+    @Inject RealmConfiguration realmConfig;
     @Inject String itemId;
+    private Realm realm;
 
     @Inject Presenter() {
     }
 
+    @Override public void onEnterScope(MortarScope scope) {
+      realm = Realm.getInstance(realmConfig);
+    }
+
+    @Override public void onExitScope() {
+      realm.close();
+      realm = null;
+    }
+
     @Override protected void onLoad(Bundle savedInstanceState) {
-      Realm realm = Realm.getInstance(getView().getContext());
       Todo todo = realm.where(Todo.class).equalTo("id", itemId).findFirst();
       getView().setContent(todo.getContent());
       getView().setAddedDate(todo.getAddedDate());
@@ -52,26 +76,24 @@ import net.tai2.flowmortardagger2demo.view.TodoEditView;
     public void onEditClick() {
       String content = getView().getContent();
       if (!content.isEmpty()) {
-        Realm realm = Realm.getInstance(getView().getContext());
         Todo todo = realm.where(Todo.class).equalTo("id", itemId).findFirst();
         realm.beginTransaction();
         todo.setContent(content);
         realm.commitTransaction();
 
         getView().hideKeyboard();
-        Flow.get(getView()).goBack();
+        Flow.get(getContext()).goBack();
       }
     }
 
     public void onDeleteClick() {
-      Realm realm = Realm.getInstance(getView().getContext());
       Todo todo = realm.where(Todo.class).equalTo("id", itemId).findFirst();
       realm.beginTransaction();
       todo.removeFromRealm();
       realm.commitTransaction();
 
       getView().hideKeyboard();
-      Flow.get(getView()).goBack();
+      Flow.get(getContext()).goBack();
     }
   }
 }

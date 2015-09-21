@@ -15,7 +15,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import io.realm.RealmBaseAdapter;
 import io.realm.RealmResults;
@@ -26,7 +25,7 @@ import net.tai2.flowmortardagger2demo.mvpsupport.ActionBarModifier;
 import net.tai2.flowmortardagger2demo.mvpsupport.DaggerService;
 import net.tai2.flowmortardagger2demo.presenter.TodoListPath;
 
-public class TodoListView extends LinearLayout implements ActionBarModifier {
+public class TodoListView extends LinearLayout implements ActionBarModifier, TodoListPath.View {
 
   @Inject TodoListPath.Presenter presenter;
   @Bind(R.id.list_view) ListView listView;
@@ -57,7 +56,7 @@ public class TodoListView extends LinearLayout implements ActionBarModifier {
     return getContext().getString(R.string.title_todo_list);
   }
 
-  public void showList(RealmResults<Todo> results) {
+  @Override public void showList(RealmResults<Todo> results) {
     MyAdapter adapter = new MyAdapter(getContext(), results, true);
     listView.setAdapter(adapter);
     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,7 +66,7 @@ public class TodoListView extends LinearLayout implements ActionBarModifier {
     });
   }
 
-  public void setFilter(String filter) {
+  @Override public void setFilter(String filter) {
     if (filter.equals("all")) {
       filterGroup.check(R.id.radio_all);
     } else if (filter.equals("done")) {

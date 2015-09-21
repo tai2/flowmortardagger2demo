@@ -15,7 +15,7 @@ import net.tai2.flowmortardagger2demo.mvpsupport.ActionBarModifier;
 import net.tai2.flowmortardagger2demo.mvpsupport.DaggerService;
 import net.tai2.flowmortardagger2demo.presenter.TodoAddPath;
 
-public class TodoAddView extends RelativeLayout implements ActionBarModifier {
+public class TodoAddView extends RelativeLayout implements ActionBarModifier, TodoAddPath.View {
 
   @Inject TodoAddPath.Presenter presenter;
   @Bind(R.id.content) EditText content;
@@ -49,12 +49,13 @@ public class TodoAddView extends RelativeLayout implements ActionBarModifier {
     presenter.onAddClick();
   }
 
-  public String getContent() {
+  @Override public String getContent() {
     return content.getText().toString();
   }
 
-  public void hideKeyboard() {
-    InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+  @Override public void hideKeyboard() {
+    InputMethodManager imm =
+        (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
     imm.hideSoftInputFromWindow(getWindowToken(), 0);
   }
 }

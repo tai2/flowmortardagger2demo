@@ -5,33 +5,47 @@ import android.os.Bundle;
 import flow.Flow;
 import flow.path.Path;
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import javax.inject.Inject;
-import mortar.ViewPresenter;
+import mortar.MortarScope;
 import net.tai2.flowmortardagger2demo.MyApplication;
 import net.tai2.flowmortardagger2demo.R;
 import net.tai2.flowmortardagger2demo.model.Todo;
+import net.tai2.flowmortardagger2demo.mvpsupport.ContextHolder;
 import net.tai2.flowmortardagger2demo.mvpsupport.Layout;
 import net.tai2.flowmortardagger2demo.mvpsupport.PerScreen;
+import net.tai2.flowmortardagger2demo.mvpsupport.ViewPresenter;
 import net.tai2.flowmortardagger2demo.mvpsupport.WithComponent;
 import net.tai2.flowmortardagger2demo.view.TodoListView;
 
 @Layout(R.layout.todo_list) @WithComponent(TodoListPath.Component.class) public class TodoListPath
     extends Path {
 
+  public interface View extends ContextHolder {
+    void showList(RealmResults<Todo> results);
+
+    void setFilter(String filter);
+  }
+
   @dagger.Component(dependencies = MyApplication.Component.class) @PerScreen
   public interface Component {
     void inject(TodoListView v);
   }
 
-  @PerScreen public static class Presenter extends ViewPresenter<TodoListView> {
-
-    private RealmResults<Todo> todoItems;
+  @PerScreen public static class Presenter extends ViewPresenter<View> {
 
     @Inject SharedPreferences prefs;
+    @Inject RealmConfiguration realmConfig;
+    private Realm realm;
+    private RealmResults<Todo> todoItems;
 
     @Inject Presenter() {
+    }
+
+    @Override public void onEnterScope(MortarScope scope) {
+      realm = Realm.getInstance(realmConfig);
     }
 
     @Override protected void onLoad(Bundle savedInstanceState) {
@@ -39,8 +53,12 @@ import net.tai2.flowmortardagger2demo.view.TodoListView;
       showList();
     }
 
+    @Override public void onExitScope() {
+      realm.close();
+      realm = null;
+    }
+
     private void showList() {
-      Realm realm = Realm.getInstance(getView().getContext());
       RealmQuery<Todo> query = realm.where(Todo.class);
       String filter = prefs.getString("filter", "all");
       if (filter.equals("done")) {
@@ -58,11 +76,10 @@ import net.tai2.flowmortardagger2demo.view.TodoListView;
     }
 
     public void onItemClick(int position) {
-      Flow.get(getView()).set(new TodoEditPath(todoItems.get(position).getId()));
+      Flow.get(getContext()).set(new TodoEditPath(todoItems.get(position).getId()));
     }
 
     public void onItemCheck(int position, boolean check) {
-      Realm realm = Realm.getInstance(getView().getContext());
       Todo todo = todoItems.get(position);
       realm.beginTransaction();
       todo.setDone(check);
